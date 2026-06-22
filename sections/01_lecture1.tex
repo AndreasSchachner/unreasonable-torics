@@ -1,0 +1,1110 @@
+% ==================================================================
+\section{Lecture~1: The why and how of Calabi--Yau}\label{sec:L1}
+
+\medskip
+
+\noindent\textit{Anchor:} TASI \cite{McAllister:2025qwq},
+\S\S\,1--2.
+
+\medskip
+\noindent\textit{Guiding question.} What can toric methods compute
+for string compactifications, and where do current methods still
+fall short?
+
+The answer will be deliberately two-sided. Toric geometry gives an
+explicit, computable supply of Calabi--Yau threefold hypersurfaces:
+Hodge numbers, intersection forms, cones, divisor topology, periods,
+and enumerative inputs such as Gopakumar--Vafa invariants can be
+extracted algorithmically. It does not, by itself, solve the
+Ricci-flat metric, determine every effective curve or divisor on the
+hypersurface, or provide access to all quantum corrections.
+
+\medskip
+\noindent\textit{Historical and computational thread.}
+The geometric problem starts with two classical inputs. Yau's
+solution of the Calabi conjecture implies the existence of
+Ricci-flat K\"ahler metrics on compact K\"ahler manifolds with
+trivial canonical bundle \cite{Yau:1978cfy}, while Calabi--Yau
+threefolds entered string compactification through the work of
+Candelas, Horowitz, Strominger and Witten
+\cite{Candelas:1985en}. The reason these lectures focus on toric
+hypersurfaces is more computational: Batyrev's reflexive polytopes
+give a large, explicit class of mirror pairs
+\cite{Batyrev:1993oya}; the Kreuzer--Skarke classification makes
+this class finite and searchable \cite{Kreuzer:2000xy}; and modern
+packages such as \texttt{CYTools} turn the resulting combinatorial
+data into the intersection, cone and divisor-topology inputs used
+later \cite{Demirtas:2022hqf}. Lecture~1 explains enough of this
+chain to make Lectures~2 and~3 self-contained.
+
+\medskip
+\noindent\textit{Goals.} After this lecture you can
+\begin{enumerate}[nosep,leftmargin=*]
+    \item state what a string compactification is, as a geometric
+    object, and why the vacuum Einstein equations on a product ansatz
+    select Ricci-flat internal manifolds;
+    \item explain why Calabi--Yau threefolds are the computable
+    Ricci-flat class used in these lectures, and how reduced holonomy
+    gives the parallel spinors responsible for residual
+    supersymmetry;
+    \item identify the moduli of a Calabi--Yau compactification with
+    specific cohomological data;
+    \item explain why Calabi--Yau hypersurfaces in toric varieties
+    are the natural constructive source of explicit compact examples,
+    and what data they feed into Lectures~2 and~3.
+\end{enumerate}
+
+
+\subsection{Why string theory, and why compactify?}
+
+
+
+Let us motivate how geometry enters physics.
+We have very successful but structurally different theories
+for matter and gravity:
+\begin{equation}
+\begin{array}{lll}
+\text{matter} &:&
+  \begin{array}[t]{l}
+    \text{Standard Model},\\
+    \text{\emph{language:} quantum field theory},\\
+    \text{\emph{hypothesis:} point particles};
+  \end{array}
+\\[1.2em]
+\text{gravity} &:&
+  \begin{array}[t]{l}
+    \text{General Relativity},\\
+    \text{\emph{language:} differential geometry},\\
+    \text{\emph{hypothesis:} spacetime as a manifold}.
+  \end{array}
+\end{array}
+\end{equation}
+The quantum gravity problem is to find a framework in which these two
+descriptions can be combined.  Perturbative quantum gravity based on
+point particles is not perturbatively renormalisable, and curvature
+singularities indicate that the classical spacetime description
+itself can break down.  String theory is one proposed framework in
+which the fundamental extended objects are one-dimensional strings
+rather than point particles.
+
+\begin{figure}
+\begin{center}
+\centering
+\begin{tikzpicture}[scale=1.08,>=Latex]
+  \begin{scope}
+    \draw[->,thin] (-0.25,-0.15) -- (2.35,-0.15) node[right] {$x$};
+    \draw[->,thin] (-0.25,-0.15) -- (-0.25,2.70) node[above] {$t$};
+    \draw[thick,->] (0.55,0.15)
+      .. controls (0.35,0.70) and (0.95,1.05) .. (0.75,1.55)
+      .. controls (0.60,1.95) and (1.10,2.30) .. (1.35,2.52);
+    \fill (0.55,0.15) circle (2pt);
+    \fill (0.75,1.55) circle (2pt);
+    \node[align=center] at (1.05,-0.78) {particle theory:\\ worldline};
+  \end{scope}
+
+  \node at (3.35,1.25) {\large vs.};
+
+  \begin{scope}[xshift=4.55cm]
+    \draw[->,thin] (-0.25,-0.15) -- (2.75,-0.15) node[right] {$x$};
+    \draw[->,thin] (-0.25,-0.15) -- (-0.25,2.70) node[above] {$t$};
+    \path[fill=blue!6]
+      (0.55,0.20)
+      .. controls (0.30,0.85) and (0.78,1.45) .. (0.55,2.55)
+      -- (1.65,2.55)
+      .. controls (1.95,1.78) and (1.30,1.00) .. (1.58,0.20)
+      -- cycle;
+    \begin{scope}
+      \clip
+        (0.55,0.20)
+        .. controls (0.30,0.85) and (0.78,1.45) .. (0.55,2.55)
+        -- (1.65,2.55)
+        .. controls (1.95,1.78) and (1.30,1.00) .. (1.58,0.20)
+        -- cycle;
+      \draw[thin] (0.15,0.72)
+        .. controls (0.65,0.55) and (1.18,0.90) .. (2.05,0.74);
+      \draw[thin] (0.15,1.42)
+        .. controls (0.70,1.25) and (1.24,1.62) .. (2.05,1.45);
+      \draw[thin] (0.15,2.12)
+        .. controls (0.70,1.95) and (1.28,2.30) .. (2.05,2.15);
+    \end{scope}
+    \path[draw,thick]
+      (0.55,0.20)
+      .. controls (0.30,0.85) and (0.78,1.45) .. (0.55,2.55)
+      -- (1.65,2.55)
+      .. controls (1.95,1.78) and (1.30,1.00) .. (1.58,0.20)
+      -- cycle;
+    \draw[->,thin] (2.25,0.35) -- (2.25,2.35);
+    \node[align=center] at (1.10,-0.78) {string theory:\\ worldsheet $\Sigma$};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\vspace*{-0.5cm}
+\caption{A point particle sweeps out a
+one-dimensional worldline, whereas a string sweeps out a
+two-dimensional worldsheet.  In both panels the object evolves upward
+in target time $t$: the point traces a curve, while the spatially
+extended string traces a strip. }
+\end{figure}
+
+The useful contrast is the following. A particle
+traces out a worldline in spacetime; a string traces out a worldsheet
+$\Sigma$, and the simplest classical action is proportional to its
+area,
+\begin{equation}
+    S_{\rm NG}=-T\int_{\Sigma}\mathrm{d}A \, ,
+\end{equation}
+where $T$ is the string tension. Quantising the string gives a
+tower of vibrational modes. 
+In the point-particle picture
+one quantises the possible motions of a point; in the string picture
+one also quantises the normal modes of an extended object.  Very
+schematically,
+\begin{equation}
+    \text{particle: worldline}
+    \qquad\longrightarrow\qquad
+    \text{string: worldsheet with oscillator modes}\, .
+\end{equation}
+The word ``harmonics'' here refers to these oscillator modes of the
+string.  After quantisation they appear, from the spacetime point of
+view and for an observer sufficiently far away, as different particle
+species: scalars, gauge fields, spinors, and a spin-$2$ graviton
+among them.
+
+
+It is useful to separate two attitudes.  One can use
+string theory and related constructions as mathematical
+tools in broader effective descriptions.  In these lectures we use
+the stronger quantum gravity interpretation: the theory is required
+to include gravity, and the perturbative spectrum contains a
+spin-$2$ graviton.  With this interpretation, the consistency
+conditions of the quantum theory are part of the input.  In
+particular, for the critical superstring the consistency of the quantum theory fixes the target spacetime dimension to ten.
+At energies small compared with the
+string scale, one keeps only the massless modes. 
+The massive oscillator modes have masses of order the string
+scale $M_s$, so a low-energy observer with characteristic energy
+$E\ll M_s$ cannot excite them as dynamical fields.  Their effects are
+still present indirectly, through higher-derivative corrections to
+the effective action.
+The one fact from
+this construction that Lecture~1 needs is that the massless spectrum
+of a consistent superstring includes a ten-dimensional metric,
+together with further geometric fields such as differential forms,
+scalars, spinors, and gauge fields. The metric is what will make
+Ricci-flat geometry enter immediately.
+
+Since observed physics is effectively
+four-dimensional at accessible energies, a compactification must
+explain how a ten-dimensional theory can give a four-dimensional
+effective theory:
+\begin{equation}
+    \dim \mathcal{M}_{10}=10=9+1,
+    \qquad
+    \dim \mathcal{M}_4=4=3+1,
+    \qquad
+    \mathcal{M}_{10}\simeq \mathcal{M}_4\times X .
+\end{equation}
+The compact six-dimensional factor $X$ is where geometry enters.
+The central point of the lectures is that the topology and geometry
+of $X$ determine the light four-dimensional fields, their
+couplings, and the scalar potential whose critical values are the
+vacuum energies.
+
+
+
+
+\subsection{Framing: what a string compactification is}\label{ssec:L1-framing}
+
+For the first lecture, the input from string theory can be stated
+without choosing a specific string theory. It is the following
+geometric package.
+
+\begin{enumerate}[leftmargin=*]
+    \item A \emph{ten-dimensional spacetime} $\mathcal{M}_{10}$:
+    a Lorentzian $10$-manifold with metric $g_{MN}$.
+    \item Additional \emph{fields} $\Phi$ on $\mathcal{M}_{10}$.
+    Here a field simply means a geometric object varying over
+    spacetime: a section of a vector bundle, such as a differential
+    form, a function, a connection, a spinor, or the metric itself.
+    In Lecture~1 we keep these fields mostly silent and set them to zero or
+    to constants when deriving the Ricci-flatness condition.
+    \item \emph{Source terms and charged objects}, such as branes
+    and orientifold planes,
+    which enter through $\mathcal{L}_{\rm source}$ and produce
+    localised stress-energy and charge.
+    A brane is an extended object on which open strings can
+    end, or more generally an object carrying charge under one of the
+    differential-form gauge fields of the theory.  Its worldvolume is
+    a submanifold of spacetime, so after compactification a brane can
+    wrap a cycle in $X$ and fill some or all of the visible
+    four-dimensional spacetime.  This is why branes are simultaneously
+    geometric objects and physical sources: they contribute localised
+    energy-momentum, carry quantised charge, and can support gauge
+    fields or matter in the four-dimensional theory
+    \cite{Polchinski:1996na}.
+    \item An \emph{action functional}
+    \begin{equation}
+        S[g,\Phi]
+        =
+        \frac{1}{2\kappa_{10}^2}\int_{\mathcal{M}_{10}}
+        \mathrm{d}^{10}x\,\sqrt{-g}\,
+        \bigl(R^{(10)}+\mathcal{L}_{\rm matter}(g,\Phi)
+        +\mathcal{L}_{\rm source}(g,\Phi)+\underbrace{\ldots}_{\mathrm{e.g.}\, R^4}\bigr)\, ,
+    \end{equation}
+    whose Euler--Lagrange equations are the equations of motion,
+    i.e., the differential equations obtained by requiring the first
+    variation of $S$ to vanish, see Eq.~\eqref{eq:EOMRvac} below.
+    This is the classical, leading-order ten-dimensional action.
+    The full string effective action also contains
+    higher-derivative and quantum corrections.\footnote{The first well-known perturbative
+    correction to the ten-dimensional type-II action contains an
+    $R^4$ term at order $(\alpha')^3$. The
+    parameter $\alpha'$ is the inverse string tension, up to the
+    conventional factor $2\pi$, and sets the square of the string
+    length.  Corrections in powers of $\alpha'$ are higher-derivative
+    or finite-string-size corrections.  The string coupling $g_s$
+    controls the loop expansion.}
+    We do not include those corrections in the first-pass
+    vacuum equation, but they reappear in Lecture~2 as corrections to
+    the four-dimensional effective action.
+\end{enumerate}
+
+Let $x^\mu$ be coordinates on a four-dimensional Lorentzian manifold
+$\mathcal{M}_4$ and $y^m$ coordinates on a compact real
+$6$-manifold $X$. A warped product metric on
+$\mathcal{M}_{10}=\mathcal{M}_4\times X$ has the form
+\begin{equation}\label{eq:L1-warped-ansatz}
+    \mathrm{d}s^2_{10}
+    =
+    \mathrm{e}^{2A(y)}\,g^{(4)}_{\mu\nu}(x)\,\mathrm{d}x^\mu \mathrm{d}x^\nu
+    +
+    \mathrm{e}^{-2A(y)}\,g^{(6)}_{mn}(y)\,\mathrm{d}y^m \mathrm{d}y^n .
+\end{equation}
+The function $A(y)$ is the \emph{warp factor}. In the first pass
+through the vacuum equations we set $A=0$, so the metric is the
+ordinary product metric
+$\mathrm{d}s^2_{10}=\mathrm{d}s^2(\mathcal{M}_4)+\mathrm{d}s^2(X)$.
+This is the Kaluza--Klein bridge in its simplest form: a
+four-dimensional observer does not see the internal coordinates
+directly, but sees the coefficients of expansions in functions,
+forms, and metric deformations on $X$.
+
+\begin{definition}[String compactification, geometrically]
+A \emph{string compactification} consists of:
+(i) a factorisation $\mathcal{M}_{10} = \mathcal{M}_4\times X$
+of the ten-dimensional spacetime into a four-dimensional Lorentzian
+manifold $\mathcal{M}_4$ and a compact $6$-dimensional Riemannian
+manifold $X$ (the \emph{internal} space);
+(ii) a solution of the ten-dimensional equations of motion on
+$\mathcal{M}_{10}$ with metric in the warped product form
+\eqref{eq:L1-warped-ansatz};
+(iii) background choices for any non-metric fields and charged
+objects that are present, subject to the global consistency
+conditions of the chosen string theory.
+\end{definition}
+
+On a compact internal space, closed differential-form field
+strengths can have quantised periods. Abstractly, if $F_p$ is a
+closed $p$-form field strength, \emph{flux quantisation} means that its
+normalised periods over integral $p$-cycles are integers, so the
+background defines an integral cohomology class. The precise
+normalisation and even the correct cohomology theory depend on the
+string theory and on the charged objects present. Lecture~2
+specialises this statement to Type IIB, where the flux
+superpotential uses the three-form classes
+$[F_3],[H_3]\in H^3(X,\mathbb{Z})$.
+
+At this point the lecture has only defined the geometric problem: choose a compact six-manifold $X$, a metric on $\mathcal{M}_4\times X$, and background fields and sources
+so that the ten-dimensional equations of motion are satisfied, and
+then determine the four-dimensional fields and interactions obtained
+by expanding around that solution.
+We now first find the internal geometries that can solve the equations of motion in the compactification background, and then ask which four-dimensional fields and
+potentials those geometries produce.
+
+\subsection{The vacuum solution problem}\label{ssec:L1-vacuum}
+
+We begin in the simplest setting: no fluxes, no branes. We ask which
+Riemannian metrics on $X$ are compatible with a vacuum solution.
+
+The metric equation comes from varying the schematic action above
+with respect to $g^{MN}$. Let
+\begin{equation}
+    S_{\rm matter+source}
+    =
+    \frac{1}{2\kappa_{10}^2}
+    \int \mathrm{d}^{10}x\,\sqrt{-g}\,
+    \bigl(\mathcal{L}_{\rm matter}+\mathcal{L}_{\rm source}\bigr)\, ,
+\end{equation}
+where $\mathcal{L}_{\rm matter}$ contains the kinetic terms of the
+non-metric fields $\Phi$ and $\mathcal{L}_{\rm source}$ contains
+localised brane/orientifold terms. Define
+\begin{equation}
+    T_{MN}
+    \coloneqq  
+    -\frac{2}{\sqrt{-g}}\,
+    \frac{\delta S_{\rm matter+source}}{\delta g^{MN}} .
+\end{equation}
+Then the ten-dimensional Einstein equation is
+\begin{equation}\label{eq:EOMRvac} 
+    R^{(10)}_{MN}
+    =
+    \kappa_{10}^2
+    \left(T_{MN}-\frac18 g_{MN}T^K{}_K\right).
+\end{equation}
+In this first pass we set all additional fields to zero or constant
+and include no localised sources, so $T_{MN}=0$. The unwarped product
+version of \eqref{eq:L1-warped-ansatz} then gives
+\begin{equation}
+    R_{\mu\nu}^{(4)} = 0 \,, \qquad R_{mn}^{(6)} = 0 \,.
+\end{equation}
+The four-dimensional Einstein vacuum equation forces $\mathcal{M}_4$
+to be Ricci-flat. For our purposes the physically interesting case
+is $\mathcal{M}_4 = \mathbb{R}^{1,3}$ (Minkowski), so
+$R_{\mu\nu}^{(4)}=0$ holds trivially. The interesting condition is
+the internal one: \emph{$X$ must be Ricci-flat}.
+
+The problem is then: construct compact Ricci-flat Riemannian
+$6$-manifolds on which one can compute. This is a hard nonlinear PDE
+problem: explicit Ricci-flat metrics on compact non-flat
+$6$-manifolds are generally not known in closed form. The useful
+insight is that one does not need the metric explicitly in order to
+build the compactification. Yau's theorem guarantees the
+\emph{existence} of Ricci-flat K\"ahler metrics from
+complex-geometric data, and toric geometry gives a large explicit
+class of spaces for which the relevant topological data are
+computable.
+
+\subsection{Berger's holonomy classification}\label{ssec:L1-berger}
+
+The compactification problem above asks for Ricci-flat internal
+manifolds with enough structure to control the low-energy theory.
+Holonomy is the efficient invariant for this purpose. It records how
+tangent vectors, tensors and spinors transform under parallel
+transport, and therefore tells us which parallel geometric objects a
+metric can admit. 
+
+\begin{theorem}[Berger, holonomy classification \cite{Joyce:2000,Besse:1987}]\label{thm:berger}
+Let $(X,g)$ be a simply-connected, complete Riemannian manifold
+whose holonomy representation is irreducible and whose metric is
+not locally symmetric. Then the (restricted) holonomy group
+$\Hol(X,g)\subseteq\mathrm{SO}(\dim X)$ is one
+of groups in Table~\ref{tab:berger}.
+The lower bounds $m\geq 2$ remove degenerate or duplicated
+low-dimensional cases ($\mathrm{U}(1)=\mathrm{SO}(2)$,
+$\mathrm{Sp}(1)=\mathrm{SU}(2)$,
+$\mathrm{Sp}(1)\!\cdot\!\mathrm{Sp}(1)=\mathrm{SO}(4)$).
+\end{theorem}
+
+\begin{table}[t!]
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+Holonomy & Dimension & Ricci-flat? & Geometry relevant here \\
+\midrule
+$\mathrm{SO}(n)$ & $n$ & no generic implication & no parallel spinor in general \\
+$\mathrm{U}(m)$ & $2m$ & not necessarily & K\"ahler \\
+$\mathrm{SU}(m)$ & $2m$ & yes & Calabi--Yau (Kähler+Ricci-flat) \\
+$\mathrm{Sp}(m)$ & $4m$ & yes & hyperk\"ahler \\
+$\mathrm{Sp}(m)\!\cdot\!\mathrm{Sp}(1)$ & $4m$ & no (Einstein) & quaternionic K\"ahler \\
+$G_2$ & $7$ & yes & $G_2$ manifolds \\
+$\mathrm{Spin}(7)$ & $8$ & yes & $\mathrm{Spin}(7)$ manifolds \\
+\bottomrule
+\end{tabular}
+\end{center}
+\caption{Berger's list of irreducible
+Riemannian holonomies.}\label{tab:berger} 
+\end{table}
+
+
+Berger's theorem is useful here because it sharply limits the
+possible irreducible, non-symmetric Riemannian holonomies. It does
+\emph{not} classify all compact Ricci-flat manifolds. Rather, it
+explains why, once one asks for a six-dimensional irreducible
+Ricci-flat background admitting parallel spinors, the natural
+holonomy group is contained in $\mathrm{SU}(3)$. In the terminology
+of \cite{McAllister:2025qwq}, the compact Ricci-flat
+examples used in string compactification all arise from reduced, or
+special, holonomy; the Calabi--Yau case is the six-dimensional
+member of this list that is complex, K\"ahler, and computationally
+accessible. This is a guide to the known constructive landscape, not
+a theorem excluding every possible Ricci-flat six-manifold outside
+the classes we discuss. 
+
+
+
+For a compact K\"ahler threefold, the algebraic-geometric condition
+that implements the $\mathrm{SU}(3)$ holonomy target is the
+triviality of the canonical bundle.
+Let $\mathcal{O}_X$ denote the structure sheaf of holomorphic
+functions on $X$; an isomorphism $K_X\cong\mathcal{O}_X$ means that
+the canonical bundle is holomorphically trivial, equivalently that
+there is a nowhere-vanishing holomorphic $(3,0)$-form.
+Holomorphic triviality of $K_X$ gives $c_1(X)=0$;
+Yau's theorem then gives a Ricci-flat K\"ahler metric in each
+K\"ahler class; and, after excluding flat or product factors, the
+holonomy is the expected subgroup of $\mathrm{SU}(3)$,
+\begin{equation}
+    K_X \cong \mathcal{O}_X
+    \quad\Longrightarrow\quad
+    \text{Ricci-flat K\"ahler metric}
+    \quad\Longrightarrow\quad
+    \Hol(X)\subseteq \mathrm{SU}(3)\, .
+\end{equation}
+When the holonomy is exactly $\mathrm{SU}(3)$, this is the generic
+irreducible Calabi--Yau threefold case. Proper subgroups correspond
+to extra structure, such as flat factors or product geometries, and
+usually to more supersymmetry than the generic threefold case. This
+is the precise sense in which Calabi--Yau threefolds are the
+workhorse Ricci-flat backgrounds of the lectures: they are explicit
+enough to construct and compute with, and their reduced holonomy has
+the spinorial consequence needed by the physics.
+
+\subsection{Aside: Reduced holonomy, parallel spinors, and supersymmetry*}
+\label{ssec:L1-ricci-flat}
+
+Supersymmetry is not the starting point of the geometric argument; it
+is a consequence of the reduced holonomy just described. The physics
+reason one cares about it is that residual supersymmetry gives
+technical control of the low-energy theory and organises the
+four-dimensional fields into multiplets. The mathematical statement
+is the existence of parallel sections of the spinor bundle.
+
+\begin{definition}[Parallel (covariantly constant) spinor]
+Let $(X,g)$ be a Riemannian spin manifold with spinor bundle $S\to X$
+and let $\nabla$ denote the spin connection. A \emph{parallel} (or
+\emph{covariantly constant}) \emph{spinor} is a smooth section
+$\eta\in\Gamma(S)$ with $\nabla \eta = 0$.
+\end{definition}
+
+\begin{remark}[Terminology]
+In the physics literature these are often called \emph{Killing
+spinors}. In the standard differential-geometry convention,
+a \emph{Killing spinor} satisfies
+$\nabla_X\eta = \lambda\, X\!\cdot\!\eta$ for a nonzero constant
+$\lambda$, and the $\lambda=0$ case is called a \emph{parallel}
+spinor and treated separately. For the unwarped Minkowski
+compactification considered here the relevant case is $\lambda=0$,
+and we use the term \emph{parallel} throughout.
+\end{remark}
+
+\begin{proposition}[Physics dictionary; standard supergravity
+    Killing-spinor analysis,
+    \cite{McAllister:2025qwq} \S\,2.3]\label{thm:susy-parallel}
+For the configuration $\mathcal{M}_4 \times X$ with
+$\mathcal{M}_4 = \mathbb{R}^{1,3}$, the unwarped product metric,
+no fluxes, and no branes, vanishing of the supergravity SUSY
+variations on the four-dimensional vacuum requires that $X$ admit
+a parallel spinor. Starting from a ten-dimensional Type II theory
+with thirty-two real supercharges, one independent complex parallel
+spinor on $X$ corresponds to $\mathcal{N}=2$ four-dimensional
+supersymmetry (eight real supercharges) before any orientifold
+projection; starting instead from a heterotic or Type I theory
+(sixteen real supercharges in ten dimensions), the same condition
+yields $\mathcal{N}=1$ in four dimensions (four real supercharges),
+as in Candelas--Horowitz--Strominger--Witten
+\cite{Candelas:1985en}.
+
+\emph{Status:} this is a standard physics derivation, not a
+mathematical theorem about $(X,g)$ alone, and assumes the
+leading-order supergravity expansion.
+\end{proposition}
+
+The invariant internal spinors determine the residual supersymmetry.
+The precise conversion between internal spinor multiplicities and
+four-dimensional supercharges depends on the ten-dimensional
+chirality and real/complex spinor conventions. We only use the
+standard Type IIB case: an SU($3$)-holonomy Calabi--Yau threefold
+gives $\mathcal{N}=2$ supersymmetry in four dimensions (eight real
+supercharges) before the orientifold projection in Lecture~2 reduces
+it to $\mathcal{N}=1$.
+
+The bridge to topology is Berger's classification of holonomies on
+Riemannian manifolds. The curvature condition comes from the
+commutator of spin covariant derivatives. In an orthonormal frame,
+\begin{equation}
+    \nabla_m\eta
+    = \partial_m\eta
+        + \frac14\,\omega_m{}^{ab}\Gamma_{ab}\eta ,
+    \qquad
+    [\nabla_m,\nabla_n]\eta
+    = \frac14\,R_{mn}{}^{ab}\Gamma_{ab}\eta .
+\end{equation}
+If $\eta$ is parallel, the left-hand side vanishes, hence
+\begin{equation}
+    R_{mn}{}^{ab}\Gamma_{ab}\eta = 0 .
+\end{equation}
+By the Ambrose--Singer theorem the restricted holonomy algebra is
+generated by curvature endomorphisms, so this integrability
+condition says precisely that the holonomy representation fixes a
+non-zero spinor. This can happen on a non-flat manifold only if the
+holonomy group acts trivially on some subspace of the spinor
+representation; see \cite{LawsonMichelsohn:1989} for the spin
+geometry and \cite{McAllister:2025qwq}, \S\,2.3 for the physics
+dictionary.
+
+
+\subsection{Calabi--Yau threefolds: existence and Hodge structure}\label{ssec:L1-CY}
+
+The six-dimensional geometry problem has now become concrete: find
+compact Riemannian $6$-manifolds whose holonomy is contained in
+$\mathrm{SU}(3)$, and preferably equals $\mathrm{SU}(3)$ after
+excluding torus and product factors. The systematic way to produce
+such spaces is to construct compact K\"ahler threefolds with
+trivial canonical bundle and then apply Yau's theorem to obtain
+Ricci-flat metrics. Toric Calabi--Yau hypersurfaces are not meant to
+exhaust the known compact examples with
+$\mathrm{SU}(3)$ holonomy. Rather, Calabi--Yau threefolds are the
+standard geometric class relevant to this compactification problem,
+and Batyrev hypersurfaces are the large computable family used in
+these lectures.
+
+\begin{definition}[Calabi--Yau threefold]\label{def:CY3}
+A \emph{Calabi--Yau threefold} is a compact K\"ahler manifold $X$ of
+complex dimension $3$ with trivial canonical bundle
+$K_X\cong\mathcal{O}_X$ and $\pi_1(X)=0$.
+\end{definition}
+
+Equivalently, $X$ admits a nowhere-vanishing holomorphic
+$(3,0)$-form $\Omega$, unique up to scale. The appendix records the
+standard comparison with other conventions, including formulations in
+terms of $c_1(X)$ and holonomy.
+
+The simple-connectedness clause excludes $T^6$, $K3\times T^2$,
+abelian threefolds, and CY3s obtained as free quotients by a
+finite group with nontrivial $\pi_1$ (e.g.\ the heterotic
+Standard-Model quotients of Donagi--Ovrut \cite{DonagiOvrut:2000}
+and Bouchard--Donagi \cite{BouchardDonagi:2005}). It implies
+$h^{1,0}(X)=0$, removing spurious vector multiplets from
+$H^{1,0}$ and giving a clean four-dimensional $\mathcal{N}=1$
+truncation in Lecture~2. The converse fails in general: free
+finite quotients can have torsion $\pi_1$ while still satisfying
+$h^{1,0}=0$. The rigorous classification of compact K\"ahler
+manifolds with $c_1(X)=0$ in $H^2(X,\mathbb{R})$ is given by the
+Beauville--Bogomolov decomposition \cite{Beauville:1983,Joyce:2000}:
+such an $X$ admits a finite \'etale cover that is a product of
+complex tori, strict Calabi--Yau factors (with
+$\mathrm{Hol}=\mathrm{SU}(n)$, $n\geq 3$), and irreducible
+hyperk\"ahler factors (with $\mathrm{Hol}=\mathrm{Sp}(n)$).
+
+\begin{theorem}[Yau \cite{Yau:1978cfy}]\label{thm:yau}
+Let $X$ be a compact K\"ahler manifold with $c_1(X)=0$. Then in each
+K\"ahler class $[J]\in H^{1,1}(X)\cap H^2(X,\mathbb{R})$ there exists
+a unique K\"ahler metric $g$ with $\mathrm{Ric}(g)=0$.
+\end{theorem}
+
+\begin{corollary}\label{cor:CY-Ricci}
+Calabi--Yau threefolds admit Ricci-flat K\"ahler metrics; in
+particular they solve the vacuum Einstein equation
+$R_{mn}^{(6)} = 0$ required by the unwarped product ansatz.
+\end{corollary}
+
+What follows is the cohomological data we will need in Lecture~2:
+
+\begin{proposition}[CY3 Hodge diamond]
+Let $X$ be a Calabi--Yau threefold. The only independent Hodge numbers are $h^{1,1}$ and $h^{2,1}$, and the Euler characteristic is $\chi(X) = 2\bigl(h^{1,1}-h^{2,1}\bigr)$.
+\end{proposition}
+
+The holomorphic $(3,0)$-form $\Omega$ is unique up to overall
+rescaling and is nowhere vanishing. The pair
+$(h^{1,1},h^{2,1})$ is the principal topological invariant of $X$ for
+our purposes; we will see that $h^{1,1}$ counts \emph{K\"ahler
+moduli} (deformations of $J$) and $h^{2,1}$ counts \emph{complex
+structure moduli} (infinitesimal deformations of the complex
+structure on $X$, equivalently classes in $H^1(X, T_X)$).
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Geometric datum & Cohomology group & Dimension \\
+\midrule
+K\"ahler deformations & $H^{1,1}(X,\mathbb{R})$ & $h^{1,1}$ \\
+Complex structure deformations & $H^1(X,T_X)\cong H^{2,1}(X)$ & $h^{2,1}$ \\
+Holomorphic volume form & $H^{3,0}(X)$ & $1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Massless spectrum and moduli of CY compactifications}\label{ssec:L1-moduli}
+
+We now identify the four-dimensional moduli with cohomological data
+on $X$, following \cite{McAllister:2025qwq} \S\,2.5.
+
+\subsubsection{Geometric moduli: K\"ahler and complex structure}
+
+\begin{proposition}[K\"ahler moduli]\label{prop:K-moduli}
+The space of infinitesimal Ricci-flat K\"ahler deformations of
+$(X,g)$ at fixed complex structure is
+$H^{1,1}(X,\mathbb{R})$. Concretely, every $\delta J$ with
+$\delta g_{i\bar j} = \mathrm{i}\,\delta J_{i\bar j}$ harmonic of type
+$(1,1)$ deforms the metric to a nearby Ricci-flat one.
+\end{proposition}
+
+\begin{proposition}[Complex structure moduli; Kodaira--Spencer]\label{prop:CS-moduli}
+The space of infinitesimal complex structure deformations of $X$ is
+$H^1(X,T_X) \cong H^{2,1}(X)$, where the isomorphism is given by
+contraction with the holomorphic volume form $\Omega$,
+\begin{equation}
+    \mu \;\mapsto\; \iota_{\mu}\Omega
+        \;\in\; H^{2,1}(X) \,,
+    \qquad
+    (\iota_{\mu}\Omega)_{i j \bar k}
+        \;=\; \Omega_{i j l}\, \mu^{l}{}_{\bar k} \,,
+\end{equation}
+where $\mu \in H^1(X,T_X)$ is the Beltrami differential, a $(0,1)$-form valued in $T^{1,0}X$.
+\end{proposition}
+
+We write $J=t^aD_a$, $a=1,\ldots,h^{1,1}$, for real K\"ahler
+coordinates in a chosen divisor basis, with admissibility meaning
+$J\in\KC(X)$, and $z^i$, $i=1,\ldots,h^{2,1}$, for complex
+parameters on $H^{2,1}(X)$.
+These are the precise geometric realisations of the schematic
+parameters $u^i(x)$ in \S\ref{ssec:L1-framing}: they are
+infinitesimal metric deformations $\delta g$ for which the deformed
+metric remains Ricci-flat to first order. Yau's theorem upgrades
+these infinitesimal deformations to genuine nearby Ricci-flat
+K\"ahler metrics inside the K\"ahler cone and complex structure
+moduli space.
+
+
+
+\subsubsection{How ten-dimensional fields become four-dimensional fields}
+
+We can now turn to the idea of Kaluza--Klein reductions.
+Suppose first that $A=0$ and that the
+internal space $X$ is fixed. A ten-dimensional scalar field admits
+a formal expansion in eigenfunctions of the scalar Laplacian on
+$X$,
+\begin{equation}
+    \Phi(x,y)=\sum_i \varphi_i(x) f_i(y),
+    \qquad
+    -\Delta_X f_i=\lambda_i f_i .
+\end{equation}
+After inserting this expansion into the ten-dimensional kinetic
+term and integrating over $X$, the coefficient
+$\varphi_i(x)$ becomes a four-dimensional scalar field with mass
+squared proportional to $\lambda_i$, up to the conventional length
+scale of $X$ and to corrections from warping or background fluxes.
+Thus harmonic modes, $\lambda_i=0$, give massless fields before
+additional interactions are included, while non-zero eigenvalues give
+the Kaluza--Klein tower. A field is called \emph{light} if its mass
+lies below the cutoff of the four-dimensional effective theory under
+consideration.
+
+The same idea applies to differential forms. If $C_p$ is a
+$p$-form field and $\omega_\alpha$ is a harmonic $p$-form on
+$X$, then
+\begin{equation}
+    C_p(x,y)=\sum_\alpha a_\alpha(x)\,\omega_\alpha(y)+\cdots,
+    \qquad [\omega_\alpha]\in H^p(X,\mathbb{R}),
+\end{equation}
+produces scalar fields $a_\alpha(x)$ in four dimensions. This is
+the first reason cohomology appears in the physics: it organises the
+massless topological modes.
+
+\subsection{Energy densities from moduli fields}
+
+The previous subsection explained how cohomology classes and
+families of internal metrics give rise to light four-dimensional
+fields.  The next question is dynamical: once these fields have been
+identified, what energy is assigned to a configuration of them?  This
+is the point at which the geometry of the compact space becomes an
+input to four-dimensional cosmology.
+
+For the physics, the crucial extra step is to allow these parameters
+to depend on the four-dimensional coordinates $x^\mu$.  A path in the
+moduli space of Ricci-flat metrics then becomes a four-dimensional
+field configuration.  If the fields vary in time, the internal metric
+$g^{(6)}(y;\phi(t))$ also changes in time, and this time-dependence
+contributes to the four-dimensional stress-energy.  In this sense, the
+variation of the geometry of $X$ leads directly to cosmological
+evolution in $3+1$ dimensions.
+
+The phrase \emph{cosmological evolution} will be used here in a
+minimal sense.  It means a solution of the four-dimensional Einstein
+equations coupled to scalar fields, typically with a time-dependent
+metric on $\mathcal{M}_4$ and time-dependent scalar fields
+$\phi^A(t)$.  From the ten-dimensional point of view, this same
+solution can be read as a family of internal geometries
+$g^{(6)}(y;\phi(t))$ evolving over four-dimensional time.  Thus the
+dynamical evolution of the internal metric is not an extra metaphor:
+it is precisely the four-dimensional dynamics of the moduli fields.
+
+This brings the discussion back to the central aim of the lecture
+series.  Moving in the moduli space of internal geometries is, in the
+four-dimensional effective theory, the same as changing the values of
+scalar fields.  The scalar potential on this field space is the object
+whose critical values are the vacuum energies that
+Lectures~2 and~3 compute from toric data.
+
+
+The metric itself also reduces. A family of Ricci-flat metrics
+$g^{(6)}(y;\phi)$ depending on parameters $\phi^A$ gives
+four-dimensional scalar fields by allowing those parameters to vary
+over spacetime,
+\begin{equation}
+    g^{(6)}_{mn}(y;\phi)
+    \quad\leadsto\quad
+    g^{(6)}_{mn}\bigl(y;\phi(x)\bigr).
+\end{equation}
+If varying $\phi^A$ preserves the leading-order ten-dimensional
+equations, then $\phi^A$ is a \emph{modulus}. 
+For Calabi--Yau compactifications, the most important
+examples are the K\"ahler moduli and complex structure moduli counted
+by $h^{1,1}(X)$ and $h^{2,1}(X)$.  They are geometric fields in four
+dimensions: their values determine the shape and size data of the
+internal Calabi--Yau metric. 
+Classically, these moduli have no potential:
+moving in the moduli space still gives a vacuum solution, so
+\begin{equation}
+    V(\phi)=0
+    \qquad
+    \text{along the classical Calabi--Yau moduli space.}
+\end{equation}
+
+
+\begin{figure}[t!]
+\begin{center}
+\centering
+\begin{tikzpicture}[scale=1.20,>=Latex]
+  \begin{scope}
+    \node at (1.75,2.95) {\revision{$T_{MN}=0$}};
+    \draw[->,thin] (0,0) -- (0,2.25) node[above] {$V(\phi)$};
+    \draw[->,thin] (0,0) -- (3.25,0) node[below right] {$\phi^A$};
+    \draw[thick] (0.25,0.45) -- (2.95,0.45);
+    \node[left] at (0,0.45) {$0$};
+  \end{scope}
+
+  \begin{scope}[xshift=5.45cm]
+    \node at (1.75,2.95) {\revision{$T_{MN}\neq 0$}};
+    \draw[->,thin] (0,0) -- (0,2.25) node[above] {$V(\phi)$};
+    \draw[->,thin] (0,0) -- (3.25,0) node[below right] {$\phi^A$};
+    \draw[thick]
+      (0.25,0.65)
+      .. controls (0.70,1.85) and (1.10,0.20) .. (1.55,0.95)
+      .. controls (1.95,1.55) and (2.30,0.50) .. (2.75,1.35)
+      .. controls (2.95,1.70) and (3.05,1.78) .. (3.15,1.85);
+    \fill (1.48,0.92) circle (2pt);
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\vspace*{-0.5cm}
+\caption{Classically the Calabi--Yau moduli are
+flat directions: in the leading source-free approximation the
+ten-dimensional stress-energy contribution is $T_{MN}=0$, and the
+four-dimensional potential vanishes along the moduli space.  Fluxes,
+localised sources, and further corrections are represented
+schematically by $T_{MN}\neq0$ in the ten-dimensional equations; in
+the four-dimensional theory they lift the flat moduli space to an
+energy landscape $V(\phi)$.}
+\end{figure}
+
+
+Later we will include ingredients with non-trivial
+stress-energy, such as fluxes, branes, orientifold planes, and
+quantum corrections.  In ten dimensions these appear as
+$T_{MN}\neq 0$ in \eqref{eq:EOMRvac}; in the four-dimensional
+effective theory they generate a scalar potential $V(\phi)$ for the
+fields $\phi^A$.
+At the level of the resulting
+four-dimensional effective action one has schematically
+\begin{equation}
+    S_4
+    =
+    \int_{\mathcal{M}_4}\mathrm{d}^4x\sqrt{-g_4}
+    \left[
+        \frac{\Pl^2}{2}R^{(4)}
+        -G_{AB}(\phi)\,\partial_\mu\phi^A\partial^\mu\phi^B
+        -V(\phi)
+        +\cdots
+    \right].
+\end{equation}
+For constant scalar fields, the scalar equations of motion reduce to
+\begin{equation}
+    \partial_A V(\phi_*)=0 .
+\end{equation}
+The four-dimensional Einstein equation then relates the value of the
+potential to the spacetime curvature,
+\begin{equation}
+    R^{(4)}_{\mu\nu}
+    =
+    \frac{V(\phi_*)}{\Pl^2}\,g^{(4)}_{\mu\nu}
+    \quad
+    \text{in these conventions}.
+\end{equation}
+This is the energy-landscape picture used throughout the lectures:
+geometry supplies fields and functions; a vacuum is a critical point;
+and its vacuum energy is the critical value $V(\phi_*)$.
+Lecture~2 identifies the geometric and arithmetic data
+needed to write the four-dimensional functions $K$, $W$, and hence
+$V$; Lecture~3 then uses these functions to compute $V(\phi_*)$ at
+explicit candidate critical points.
+
+
+
+
+\subsection{Why Calabi--Yau hypersurfaces in toric varieties?}\label{ssec:L1-toric}
+
+The logic above tells us which manifolds
+are admissible; it does not tell us which ones we can compute on.
+The practical compactification programme is to enumerate large
+families of Calabi--Yau threefold topologies, compute the
+cohomological and intersection-theoretic data controlling the
+four-dimensional fields, compute periods and instanton corrections
+where needed, and then use these inputs to study potentials and
+vacuum energies. For computability we use the toric construction of
+Batyrev \cite{Batyrev:1993oya}, with which the audience is already
+familiar. Projective hypersurfaces such as the quintic are familiar
+first examples; Batyrev hypersurfaces in toric varieties are the
+high-dimensional computational generalisation. A one-paragraph
+summary, for the sake of fixing notation:
+
+\begin{theorem}[Batyrev; CY threefolds from reflexive polytopes]\label{thm:batyrev}
+Let $\Delta^\circ\subset N_\mathbb{R}$ be a reflexive $4$-polytope
+(so $\Delta = (\Delta^\circ)^\vee \subset M_\mathbb{R}$ is also a
+lattice polytope, and $\Delta^\circ$ has the origin as its unique
+interior lattice point). Let $\Sigma_{\mathcal{T}}$ be the fan of a
+fine, regular, star triangulation $\mathcal{T}$ of $\Delta^\circ$.
+Then $V_{\Sigma_{\mathcal{T}}}$ is an MPCP toric ambient variety:
+it is allowed to have terminal quotient singularities, but its
+singular locus does not meet a generic anticanonical hypersurface in
+the threefold case. Consequently the generic anticanonical
+hypersurface
+$X = \{f=0\}\subset V_{\Sigma_{\mathcal{T}}}$ is a smooth
+Calabi--Yau threefold, and Batyrev gives explicit combinatorial
+formulas for its Hodge numbers in terms of $\Delta,\Delta^\circ$
+alone.
+\end{theorem}
+
+The Kreuzer--Skarke list \cite{Kreuzer:2000xy} of all $\Delta^\circ$
+contains $473\,800\,776$ reflexive 4-polytopes; together with the
+FRSTs $\mathcal{T}$ this gives a landscape of explicit Calabi--Yau
+hypersurfaces in toric varieties covering
+$1\leq h^{1,1}\leq 491$. This is the input to Lectures~2 and~3:
+every concrete construction will be ``on a particular Batyrev
+hypersurface in a specified toric ambient.''
+
+Here is the toric punchline in the form needed for the rest of the
+lectures. The Batyrev input $(\Delta^\circ,\mathcal{T})$ is not
+the final object of interest. It is the starting point for a chain of
+computations
+\begin{equation}
+    (\Delta^\circ,\mathcal{T})
+    \leadsto X
+    \leadsto
+    \{\text{topological data, cones, periods, etc.}\}
+    \leadsto
+    (K,W,V)
+    \leadsto
+    V(\phi_*) \, .
+\end{equation}
+The last number is the vacuum energy of a four-dimensional critical
+point. The list below is therefore a dictionary, not a collection of
+unrelated toric facts. For each entry one should keep three questions
+separate: what is the geometric object, where does it enter the
+four-dimensional calculation, and how is it obtained from the toric
+description?
+
+\begin{itemize}[leftmargin=*]
+    \item \emph{Wall data.}
+	A torus-invariant divisor
+    $\widehat D_\rho$ on the ambient toric variety restricts to a
+    divisor $D_\rho=\widehat D_\rho\cap X$ on
+    $X$, possibly empty for lattice points interior to facets.
+    In favourable cases these restricted toric divisor classes span
+    $H^{1,1}(X)$. Choosing a basis $D_a$, one computes
+    \begin{equation}
+        \kappa_{abc}=\int_X D_a\wedge D_b\wedge D_c,
+        \qquad
+        c_{2,a}=\int_X c_2(X)\wedge D_a .
+    \end{equation}
+    Together with the Hodge numbers $h^{1,1},h^{2,1}$, this completes the \emph{Wall data} of a Calabi--Yau threefold.
+    For $J=t^aD_a$, these same numbers give the Calabi--Yau volume
+    and divisor volumes
+    \begin{equation}
+        \begin{aligned}
+        \Vol(X,J)
+            &=
+            \frac{1}{3!}\int_X J\wedge J\wedge J
+            =
+            \frac16\kappa_{abc}t^at^bt^c,\\
+        \tau_a
+            &=
+            \frac12\int_{D_a} J\wedge J
+            =
+            \frac12\int_X D_a\wedge J\wedge J
+            =
+            \frac{\partial \Vol}{\partial t^a}
+            =
+            \frac12\kappa_{abc}t^bt^c .
+        \end{aligned}
+    \end{equation}
+
+    \par\smallskip
+    \noindent\emph{Used in:} the K\"ahler potential, the mirror prepotential, 
+    and the non-perturbative superpotential.
+
+    \par\noindent\emph{How:} In practice this data is obtained from the ambient
+    toric intersection ring, the hypersurface class, and the
+    Chern-class formula for toric hypersurfaces.  The implementation
+    used in the computational parts of these lectures is
+    \texttt{CYTools} \cite{Demirtas:2022hqf}; the same data are the
+    Wall data used to compare toric phases in
+    \cite{Gendler:2023ujl}.
+
+    \item \emph{Cone data and flops.}
+    The K\"ahler cone $\KC(X)$ records which real $(1,1)$-classes
+    can be represented by K\"ahler forms; its dual Mori cone records
+    effective curve classes. Curve volumes are the inequalities that
+    keep the large-volume expansion under control. Different FRSTs
+    can give adjacent K\"ahler chambers related by flops, and the
+    union of these chambers is the extended K\"ahler cone
+    $\eKC(X)$. In Lecture~3, moving through these adjacent chambers
+    is the geometric part of the vacuum search: one follows the
+    potential while checking that all relevant curve volumes remain
+    positive and sufficiently large.
+
+    \par\smallskip
+    \noindent\emph{Used in:} the domain of validity of the large-volume
+    expansion, the definition of K\"ahler chambers, and the geometric
+    transitions used in the Lecture~3 search strategy.
+
+    \par\noindent\emph{How:} \texttt{CYTools} computes Mori and K\"ahler cone data
+    for toric phases and tracks the classical data across
+    triangulations \cite{Demirtas:2022hqf}.  The secondary-fan and
+    chamber-navigation layer used in the separate Lecture~3 and 4 discussion
+    is provided by \texttt{fanroots} \cite{fanroots:code}.
+
+    \item \emph{Divisor data.}
+    Non-perturbative terms in the superpotential may come from ED3
+    instantons or gaugino condensation on divisors. A necessary
+    zero-mode test is expressed in terms of the Hodge numbers of the
+    divisor, especially $h^{0,1}(D)$ and $h^{0,2}(D)$, or
+    equivalently the arithmetic genus appearing in Witten's criterion.
+    For prime toric divisors these Hodge numbers can often be read
+    from the face of $\Delta$ dual to the lattice point defining
+    the divisor. This is why a purely combinatorial computation can
+    screen candidate instanton divisors before any four-dimensional
+    potential is written.
+
+    \par\smallskip
+    \noindent\emph{Used in:} deciding which divisors can support D-instanton terms in $W_{\rm np}$.
+
+    \par\noindent\emph{How:} For prime toric divisors,
+    compute divisor Hodge numbers via the face-duality formulae, see e.g.
+    \cite{Braun:2017nhi}.  This is a special toric shortcut.  For
+    non-inherited or non-toric divisors, determining the relevant
+    cohomology groups is a substantially harder sheaf-cohomology
+    problem and should not be treated as automatic output of the
+    toric combinatorics.
+
+    \item \emph{Period data.}
+    The flux superpotential in Type IIB is built from periods of the
+    holomorphic three-form,
+    \begin{equation}
+        \Pi(z)=\left(\int_{\Gamma_I}\Omega(z)\right),
+        \qquad \Gamma_I\in H_3(X,\mathbb{Z}) .
+    \end{equation}
+    Near a large complex structure point these periods are computed
+    by mirror symmetry. In practice this means solving the
+    Picard--Fuchs system of the mirror polytope and expressing the
+    answer in flat coordinates. These periods determine
+    $W_{\rm flux}$, and hence the flux value $W_0$ after the
+    complex structure moduli and the axio-dilaton are stabilised.
+
+    \par\smallskip
+    \noindent\emph{Used in:} the flux superpotential $W_{\rm flux}$,
+    in particular the stabilisation of complex structure moduli.
+
+    \par\noindent\emph{How:} construct the GKZ /
+    Picard--Fuchs system from the Batyrev mirror data, compute the
+    Frobenius solutions near an LCS point, and then match the
+    logarithmic solutions to an integral symplectic period basis using
+    the large volume monodromy on the mirror side
+    \cite{Hosono:1993qy,CoxKatz:1999,Demirtas:2023als}.
+
+    \item \emph{Enumerative data.}
+    Genus-zero Gopakumar--Vafa invariants $n_\beta$, for
+    $\beta\in H_2(X,\mathbb{Z})$, are the integer invariants that
+    repackage genus-zero Gromov--Witten invariants after the
+    multiple-cover contributions have been separated
+    \cite{Gopakumar:1998jq,Demirtas:2023als}. For the audience it is
+    useful to remember two interpretations. Mathematically, they are
+    the integral BPS/GV refinement of rational curve counts in class
+    $\beta$. In the physical interpretation they are indexed BPS
+    degeneracies, naturally described by M2-branes wrapping
+    holomorphic curves in class $\beta$. They appear in the
+    worldsheet-instanton part of the prepotential, so they correct
+    the periods and can generate exponentially small terms used in
+    small-$W_0$ constructions. Lecture~2 is devoted to making this
+    computational mirror symmetry (CMS) / GV calculation explicit
+    enough for the vacuum energy story.
+
+    \par\smallskip
+    \noindent\emph{Used in:} worldsheet-instanton corrections to the
+    prepotential, convergence estimates for the instanton expansion,
+    and the small terms that can enter small-$W_0$ and conifold-PFV
+    constructions.
+
+    \par\noindent\emph{How:} compare the instanton part of
+    the mirror prepotential with the Frobenius period expansion, use
+    the multiple-cover formula to pass from genus-zero
+    Gromov--Witten coefficients to integral GV invariants, and organise
+    the resulting finite computation by Mori-cone degree or by a
+    decomposition-closed truncation
+    \cite{Gopakumar:1998jq,Hosono:1993qy,Demirtas:2023als}.  In
+    Lecture~3 the same curve-class data are then compared across
+    flop-related chambers.
+    
+\end{itemize}
+
+
+Many of the conceptual ingredients in this story are classical by now: Calabi--Yau compactification, mirror symmetry, periods, flux superpotentials, instanton corrections, and Gopakumar--Vafa invariants have been studied for decades. What has changed rather dramatically is our ability to compute these ingredients in practice, not only for a few hand-picked examples, but uniformly across large families with widely varying Hodge numbers. The main breakthrough for explicit string constructions is therefore algorithmic as much as conceptual: toric geometry, mirror symmetry, triangulation algorithms, period computations, and modern searches over flux and Kähler data turn the existence of a vast landscape into concrete, checkable Diophantine problems.
+
+
+The companion \texttt{CYTools} session demonstrates the computational
+pipelines on explicit examples: querying the Kreuzer--Skarke database,
+constructing or sampling FRSTs, building a \texttt{CalabiYau} object,
+computing intersection numbers and cone data, testing divisor
+topology, and extracting truncated GV dictionaries. The remainder of
+these lectures explains why these computations are the inputs to established string theory
+constructions.
+
+
+\paragraph{Lecture~1 punchlines.}
+The first lecture should leave the following takeaways.
+First, compactification turns internal geometry into
+four-dimensional fields; the light fields are controlled by
+cohomology, harmonic forms, and Ricci-flat metric deformations.
+Second, uncorrected Calabi--Yau compactifications have flat moduli
+spaces, so vacuum energies only become isolated numbers after
+non-trivial sources of stress-energy generate a
+potential. Third, Calabi--Yau threefolds enter because Yau's theorem
+turns the nonlinear Ricci-flat metric problem into a computable
+complex-geometric existence problem. Fourth, hypersurfaces a la Batyrev
+make this computable at scale: toric data provide the intersection,
+cone, divisor, period, and GV inputs that Lectures~2 and~3 feed into
+the four-dimensional scalar potential.
+
+
+That completes Lecture~1.
+
+\iffalse
+\begin{exercise}\label{ex:L1-1}
+Let $X$ be a smooth Calabi--Yau threefold with $h^{1,1}=h^{2,1}=1$.
+Compute $\chi(X)$ and write down the dimensions of all Hodge groups
+$H^{p,q}(X)$.
+\end{exercise}
+\fi
+
+\iffalse
+\begin{exercise}\label{ex:L1-2}
+Let $X$ be the resolution of a generic anti-canonical hypersurface
+in a smooth $4$-dimensional toric variety $V_{\Sigma_{\mathcal{T}}}$ associated
+to a reflexive polytope $\Delta^\circ$. Show that $\Omega \in
+H^{3,0}(X)$ can be written explicitly as a residue of a meromorphic
+form on the ambient space, and identify the K\"ahler cone of $X$ as
+the (interior of the) image of the K\"ahler cone of $V_{\Sigma_{\mathcal{T}}}$
+under restriction.
+\end{exercise}
+\fi
+

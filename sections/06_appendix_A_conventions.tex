@@ -1,0 +1,240 @@
+\section{General conventions and notation}\label{sec:conventions}
+
+
+We collect the conventions used throughout. This is a reference
+section for the written notes, not a preliminary lecture. Each main
+lecture repeats the minimum notation and equations it needs. The
+conventions follow \cite{McAllister:2025qwq}, \S\,2.2, and have
+been streamlined for the present audience.
+
+\subsection{Indices and spacetime}
+
+The ten dimensions of the ambient string-theoretic spacetime are
+indexed by capital Latin letters $M,N,\ldots = 0,\ldots,9$. The
+ansatz of physical interest splits these into four ``external''
+dimensions $\mu,\nu,\ldots = 0,1,2,3$ corresponding to the
+four-dimensional spacetime that our cosmology lives in, and six
+``internal'' dimensions $m,n,\ldots = 4,\ldots,9$ corresponding to a
+compact real $6$-manifold $X$:
+\begin{equation}\label{eq:ansatz}
+    \mathrm{d}s^2_{10} \;=\; \mathrm{e}^{2A(y)}\, g^{(4)}_{\mu\nu}(x)\,\mathrm{d}x^\mu \mathrm{d}x^\nu
+        \,+\, \mathrm{e}^{-2A(y)}\,g^{(6)}_{mn}(y)\,\mathrm{d}y^m \mathrm{d}y^n \,.
+\end{equation}
+The factor $\mathrm{e}^{2A(y)}$ is the \emph{warp factor}; we will set it to
+unity at first and reinstate it in Lecture~3. We use signature
+$(-,+,+,\ldots,+)$ for $g^{(10)}$.
+
+\subsection{Differential forms and the Hodge decomposition}
+
+For a real $C^\infty$ manifold $M$ of dimension $D$ we write
+$\Omega^r(M)$ for the space of smooth $r$-forms,
+$\mathrm{d}:\Omega^r\to
+\Omega^{r+1}$ for the exterior derivative, and $\star:\Omega^r\to
+\Omega^{D-r}$ for the Hodge star with respect to a Riemannian metric
+$g$. The adjoint
+$\mathrm{d}^\dagger = (-1)^{Dr+D+1}\star \mathrm{d}\,\star$ and the
+Laplacian
+$\Delta = \mathrm{d}\mathrm{d}^\dagger
++ \mathrm{d}^\dagger\mathrm{d}$ act on $\Omega^r(M)$.
+
+We denote by $\mathcal{H}^r(M)$ the space of harmonic $r$-forms. For
+$M$ compact orientable, Hodge's theorem identifies
+\begin{equation}\label{eq:hodge-iso}
+    H^r(M,\mathbb{R}) \;\cong\; \mathcal{H}^r(M) \,.
+\end{equation}
+We write $b_r(M) = \dim_\mathbb{R} H^r(M,\mathbb{R})$ for the Betti
+numbers.
+
+\subsection{Complex manifolds and Dolbeault cohomology}
+
+A \emph{complex manifold} of complex dimension $k$ is a real
+$2k$-manifold with complex coordinate charts whose transition
+functions are holomorphic. The tangent bundle splits
+$TM\otimes\mathbb{C} = T^{1,0}M\oplus T^{0,1}M$, and differential forms
+decompose into $(p,q)$-types,
+\begin{equation}
+    \Omega^r(M,\mathbb{C}) \;=\;
+        \bigoplus_{p+q=r}\,\Omega^{p,q}(M) \,,
+\end{equation}
+with $d = \partial + \bar\partial$ on a Hermitian manifold and
+$\bar\partial^2 = 0$. The $\bar\partial$-Laplacian
+$\Delta_{\bar\partial} = \bar\partial\bar\partial^\dagger
++ \bar\partial^\dagger\bar\partial$ defines harmonic
+$(p,q)$-forms; we write $\mathcal{H}^{p,q}_{\bar\partial}(M)$ for the
+space and
+$h^{p,q}(M) = \dim \mathcal{H}^{p,q}_{\bar\partial}(M)$
+for the \emph{Hodge numbers}.
+
+On a K\"ahler manifold (Hermitian metric whose K\"ahler form $J$ is
+closed) one has the identity
+$\Delta_d = 2\Delta_{\partial} = 2\Delta_{\bar\partial}$, hence
+\begin{equation}\label{eq:betti-hodge}
+    b_r(M) \;=\; \sum_{p+q=r} h^{p,q}(M) \,,
+    \qquad h^{p,q} \;=\; h^{q,p} \,,
+    \qquad h^{p,q} \;=\; h^{k-p,k-q} \,.
+\end{equation}
+
+\subsection{Calabi--Yau threefolds}
+
+There is more than one convention for ``Calabi--Yau''; we record
+ours explicitly. \emph{In these notes a Calabi--Yau $n$-fold is a
+compact K\"ahler manifold $X$ of complex dimension $n$ with
+trivial canonical bundle $K_X \cong \mathcal{O}_X$ and
+$\pi_1(X) = 0$.} The convention matches that used in the
+candidate-dS literature
+\cite{McAllister:2025qwq,McAllister:2024lnt}; the
+simple-connectedness clause is convenient but not standard across
+the differential-geometry literature (Joyce, for instance, defines a
+CY $n$-fold as a compact K\"ahler manifold with $\Hol(X) =
+\mathrm{SU}(n)$, which implies $\pi_1(X)$ finite but not necessarily
+trivial). Under our convention, the following standard structural
+facts hold; in each case the implication should be read in the
+indicated direction.
+\begin{itemize}[nosep,leftmargin=*]
+    \item Triviality of $K_X$ is equivalent to the existence of a
+    nowhere-vanishing holomorphic $(n,0)$-form
+    $\Omega \in H^0(X, K_X) = H^{n,0}(X)$.
+    \item Yau's theorem (Thm.~\ref{thm:yau} below) gives the
+    existence and uniqueness of a Ricci-flat K\"ahler metric in
+    each K\"ahler class.
+    \item For this Ricci-flat metric, the restricted holonomy
+    (which, under $\pi_1(X)=0$, equals the full holonomy) satisfies
+    $\Hol(X) \subseteq \mathrm{SU}(n)$; equality $\Hol(X) =
+    \mathrm{SU}(n)$ requires further input, namely that $X$ is
+    irreducible (not a Riemannian product) and not hyperk\"ahler,
+    in which case Berger's classification
+    (Theorem~\ref{thm:berger}) gives $\Hol(X) = \mathrm{SU}(n)$.
+\end{itemize}
+For $n=3$ the Hodge diamond and the resulting Euler characteristic $\chi(X) = 2\bigl(h^{1,1}(X) - h^{2,1}(X)\bigr)$ are stated in \S\ref{ssec:L1-CY} (Proposition `CY3 Hodge diamond'); we do not repeat them here.
+
+\subsection{Toric notation (reminder; not derived)}
+
+We use the standard toric-geometry conventions of
+\cite{cox-little-schenck:toric}. For a complete simplicial fan
+$\Sigma \subset N_{\mathbb{R}}$ (with $N \cong \mathbb{Z}^d$) we write
+$V_\Sigma$ for the associated toric variety. Prime toric divisors
+$D_\rho$ correspond to rays $\rho\in\Sigma(1)$. The Chow group
+$A^1(V_\Sigma) \otimes \mathbb{R}$ has a distinguished cone
+$\KC(V_\Sigma)$ (the K\"ahler cone) dual to the Mori cone
+$\MC(V_\Sigma)\coloneqq  \overline{\mathrm{NE}}(V_\Sigma)$ (the closure of
+the cone generated by classes of effective $1$-cycles; see
+Definition~\ref{def:moricone}). The notation $\MC$ is used in the
+lectures to avoid confusing the Mori cone with the nef cone; the
+standard algebraic-geometry notation is displayed at the point of
+definition. For a 4-dimensional reflexive polytope
+$\Delta^\circ \subset N_\mathbb{R}$ (with polar dual
+$\Delta\subset M_\mathbb{R}$, $M=N^\vee$), the Batyrev construction
+\cite{Batyrev:1993oya} produces a Calabi--Yau threefold $X$ as the
+generic anticanonical hypersurface in the ambient toric fourfold
+$V_{\Sigma_{\mathcal{T}}}$ associated to a fine, regular, star
+triangulation (FRST) $\mathcal{T}$ of $\Delta^\circ$
+(Appendix~\ref{app:toric-FRST}). The ambient
+$V_{\Sigma_{\mathcal{T}}}$ has at worst $\mathbb{Q}$-factorial
+terminal Gorenstein singularities, located in cones of codimension
+$\geq 4$ in $V_{\Sigma_{\mathcal{T}}}$ (i.e.\ at isolated points),
+which generically do not meet the smooth hypersurface $X$.
+
+We write $\kappa_{abc} = D_a\cdot D_b\cdot D_c$ for the triple
+intersection numbers of (pullbacks of) prime toric divisors on $X$.
+For the Calabi--Yau hypersurface $X$, the K\"ahler cone is denoted
+$\KC(X) \subset H^{1,1}(X,\mathbb{R})$; the \emph{extended K\"ahler
+cone} $\eKC(X)$ is the union of $\KC(X')$ over all birational models
+$X'$ reached by chains of flops, glued along their common flop walls
+(see Proposition~\ref{prop:flop-formulas} and
+Appendix~\ref{app:kcone-extended}).
+
+The mirror Calabi--Yau threefold of $X$ is denoted $\widetilde X$
+(Batyrev construction, Appendix~\ref{app:hodge-batyrev}); we do not
+use the $X^\circ$ notation. Note that the tilde has two unrelated
+uses in these notes: the mirror manifold $\widetilde X$ and the
+extended K\"ahler cone $\eKC = \widetilde{\mathcal{K}}$.
+
+\subsection{Conventions for field-theory quantities}
+
+We work in $\hbar = c = 1$ units, and adopt $\Pl = 1$, where the
+four-dimensional reduced Planck mass has dimensionful value
+$\Pl \simeq 2.4\times 10^{18}~\mathrm{GeV}$.
+A \emph{field} on a spacetime manifold is a geometric object allowed
+to vary from point to point: for example a function, a differential
+form, a connection, or a metric. An \emph{action} is a functional of
+these fields,
+\begin{equation}
+    S[\Phi,g] = \int_M \mathrm{d}^{\dim M}x\,
+        \sqrt{|g|}\,\mathcal{L}(\Phi,g,\nabla\Phi,\ldots),
+\end{equation}
+where $\Phi$ denotes all non-metric fields and $\mathcal{L}$ is the
+Lagrangian density. Varying $S$ with respect to $\Phi$ gives the
+field equations. These field equations are what physicists call the
+\emph{equations of motion}: the differential equations satisfied by
+classical field configurations that are stationary points of the
+action. Varying $S$ with respect to the metric gives the stress-energy
+tensor
+\begin{equation}\label{eq:stress-tensor-def}
+    T_{MN}
+    \coloneqq  
+    -\frac{2}{\sqrt{-g}}\,
+    \frac{\delta S_{\rm matter+source}}{\delta g^{MN}} \, .
+\end{equation}
+Thus a schematic ten-dimensional action of the form
+\begin{equation}
+    S^{(10)}
+    =
+    \frac{1}{2\kappa_{10}^2}
+    \int \mathrm{d}^{10}x\,\sqrt{-g}\,
+        \bigl(R^{(10)}+\mathcal{L}_{\rm matter}
+        +\mathcal{L}_{\rm source}\bigr)
+\end{equation}
+gives the Einstein equation
+\begin{equation}\label{eq:einstein-stress-convention}
+    R^{(10)}_{MN} - \frac12 g_{MN}R^{(10)}
+        = \kappa_{10}^2\,T_{MN}.
+\end{equation}
+Taking the trace in $10$ dimensions rewrites this as
+$R^{(10)}_{MN}=\kappa_{10}^2(T_{MN}-\tfrac18 g_{MN}T)$, with
+$T=T^K{}_K$.
+
+A four-dimensional field is called \emph{light} relative to an
+effective description with cutoff $\Lambda$ if its mass is well below
+$\Lambda$, so it is retained as a dynamical variable. Fields with
+masses comparable to or above $\Lambda$ are integrated out and affect
+the light theory only through corrections to its couplings. In a
+compactification, harmonic zero modes are massless at leading order
+and hence light before fluxes, branes, or quantum corrections generate
+a potential.
+
+The
+ten-dimensional gravitational coupling $\kappa_{10}^2$ is normalised
+so that the leading-order action takes the form
+\begin{equation}\label{eq:S10-norm}
+    S^{(10)} =
+    \frac{1}{2\kappa_{10}^2}\!
+    \int \mathrm{d}^{10}x\,\sqrt{-g_{10}}\,
+        \Bigl(R^{(10)} - \tfrac{1}{2}|\partial\tau|^2_\tau
+            - \tfrac{1}{2}|G_3|^2 - \tfrac{1}{4}|\widetilde F_5|^2
+            + \ldots\Bigr) \,,
+\end{equation}
+with $\tau = C_0 + \mathrm{i} \mathrm{e}^{-\phi}$ the axio-dilaton,
+$G_3 = F_3 - \tau H_3$ the complexified three-form, and
+$\widetilde F_5$ the
+self-dual five-form (precise form: \eqref{eq:IIB-action}). The
+norm $|\partial\tau|^2_\tau$ uses the hyperbolic metric on the upper
+half-plane.
+
+\begin{remark}[A note on physics terms]
+Throughout these lectures, ``supergravity'' (SUGRA) denotes the
+low-energy field-theory approximation to a chosen string background:
+an action-based field theory on a Lorentzian manifold of fixed
+dimension, retaining the massless fields and their leading
+interactions. ``Supersymmetry'' (SUSY) denotes a
+$\mathbb{Z}_2$-graded extension of the Poincar\'e algebra by
+spinorial generators; an $\mathcal{N}=1$ theory in $D$ dimensions
+has one such spinor generator (so $4$ real supercharges in $D=4$).
+``Flux'' denotes a properly quantised closed differential form, or
+more precisely its integral cohomology class. In the supersymmetric
+geometric approximation, a ``brane'' is represented by a calibrated
+submanifold of $X$ carrying gauge / matter degrees of freedom.
+Precise definitions appear in Lectures~2 and~3.
+\end{remark}
+
+
+

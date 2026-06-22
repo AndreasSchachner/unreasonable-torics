@@ -1,0 +1,50 @@
+# --- LaTeX build outputs ---
+*.aux
+*.bbl
+*.blg
+*.brf
+*.fdb_latexmk
+*.fls
+*.log
+*.lof
+*.lot
+*.nav
+*.out
+*.snm
+*.synctex
+*.synctex.gz
+*.synctex(busy)
+*.toc
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.fmt
+
+# --- LaTeX auxiliary files (per-section) ---
+sections/*.aux
+sections/*.log
+
+# --- Output PDFs ---
+# Comment out the next line if you want to track the built PDF.
+*.pdf
+
+# --- Editor and OS clutter ---
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# --- Local notes ---
+*.bak
+*.tmp
+*.orig
+
+# --- TikZ externalisation cache (if used) ---
+*-figure*.dpth
+*-figure*.log
+*-figure*.md5
+*-figure*.pdf
+tikz-cache/

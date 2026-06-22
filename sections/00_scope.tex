@@ -1,0 +1,165 @@
+% ==================================================================
+\section*{Scope and lecture outline}
+\phantomsection
+\addcontentsline{toc}{section}{Scope and lecture outline}
+
+These lectures are an introduction to \textbf{toric methods for
+Calabi--Yau compactifications and the string landscape} for
+mathematicians.  The organising
+question is concrete: how much of a four-dimensional effective theory,
+and in particular of its vacuum energy, can be computed from explicit
+algebraic and toric data?  The candidate de~Sitter construction of
+\cite{McAllister:2024lnt} is the central worked example, but the first
+goal is more basic: to explain why explicit Calabi--Yau geometry is
+needed at all.
+
+The basic toric vocabulary (fans, cones, divisors, the secondary
+fan etc.) is used throughout without being re-derived in the live
+lectures; it is collected in the appendices. By contrast, the
+constructions that are central to the worked example, in particular
+Batyrev's construction of Calabi--Yau hypersurfaces from reflexive
+polytopes and the role of FRSTs, are re-derived at the level of a
+stated theorem in Lecture~1 (see Theorem~\ref{thm:batyrev}). The
+appendices collect the definitions and standard results from algebraic
+geometry, convex geometry, toric geometry, mirror symmetry,
+orientifolds, and computational workflows that are needed to read the
+notes as a self-contained reference.
+
+Sections marked by an asterisk are included for completeness and for
+later reference, but they are not part of the intended blackboard
+delivery. In the live lectures I will use them only as optional
+background or as answers to questions.
+
+\medskip
+\noindent\textbf{Prerequisites.}
+\begin{itemize}[nosep,leftmargin=*]
+    \item Algebraic and complex geometry at the level of Huybrechts
+    (\emph{Complex Geometry} \cite{Huybrechts:2005complex}) or
+    Voisin (\emph{Hodge Theory and Complex Algebraic Geometry}
+    \cite{Voisin:2002}).
+    \item Toric geometry at the level of Cox--Little--Schenck
+    \cite{cox-little-schenck:toric}: fans, divisors, intersection
+    rings, the K\"ahler and Mori cones, the secondary fan, and
+    reflexive polytopes. Batyrev's construction
+    \cite{Batyrev:1993oya} and the Kreuzer--Skarke list
+    \cite{Kreuzer:2000xy} are helpful background but are recalled in
+    Lecture~1 (see \Cref{ssec:L1-toric}).
+    \item Riemannian and Hermitian geometry: holonomy and the Hodge
+    decomposition. Berger's classification is helpful background but
+    is restated in Lecture~1 (see \Cref{thm:berger}).
+    \item Basic physics vocabulary is helpful but not assumed: fields,
+    actions, equations of motion, compactification, fluxes, branes,
+    and effective field theory are introduced when first used.
+\end{itemize}
+
+
+\medskip
+\noindent\textbf{Motivation.}
+The motivation is two-fold. First, the notes explain how toric
+geometry makes certain string compactifications explicit enough that
+one can compute physical quantities rather than only discuss them
+abstractly. The conceptual ingredients have long been established:
+Calabi--Yau geometry, mirror symmetry, Picard--Fuchs equations,
+Gopakumar--Vafa invariants, D-branes, and four-dimensional
+supergravity have all been studied for decades. What has changed is
+the feasible computational range. Many calculations that were once
+limited to one- or few-modulus examples can now be attempted for the largest known Hodge numbers, i.e., compactifications with hundreds of moduli, provided one keeps careful control of
+truncations and chamber structure.
+
+Second, the notes are meant to identify bottlenecks. 
+The concrete questions are geometric before they are
+physical. Given a Calabi--Yau threefold $X$, how does one determine
+its K\"ahler cone, effective cone etc.?
+How does one compute minimal-volume representatives of divisor
+classes, especially when holomorphic representatives exist only after
+moving in the space of birational equivalence classes of $X$? Which effective divisors have
+$h^\bullet(D,\mathcal{O}_D)=(1,0,0)$ and can therefore contribute to
+the non-perturbative superpotential? How should one compare the Wall
+data of hypersurfaces arising from different triangulations, and how
+many inequivalent geometries are really present in the
+Kreuzer--Skarke ensemble? 
+The hope is that the lectures make these questions precise enough to
+be useful to both the mathematics and string theory communities.
+
+\medskip
+\noindent\textbf{Lecture outline.}
+The live blackboard narrative is deliberately narrower than the
+written notes: compactification first selects Ricci-flat internal
+geometries; the deformations of those geometries become
+four-dimensional moduli; fluxes, sources and quantum corrections
+generate a scalar potential $V$; and toric geometry supplies much
+of the discrete data needed to write and analyse that potential. The
+detailed explanation of how ten-dimensional fields reduce to
+four-dimensional fields appears only after the Calabi--Yau moduli
+have been introduced. In this sense the purpose is not to give a
+general survey of string theory, but to explain why explicit
+geometry is needed to compute its four-dimensional consequences.
+
+
+
+There is intentional overlap with the TASI lectures
+\cite{McAllister:2025qwq}. The TASI notes are the physics-first
+reference for the Type IIB flux compactification, the leading-order
+effective field theory, and the candidate de~Sitter construction.
+The present notes reorganise that material for the ESI audience: the
+blackboard route starts from compact Ricci-flat geometry, then
+explains which toric computations supply the input to the
+four-dimensional scalar potential. Whenever a statement is imported
+from the TASI treatment rather than rederived here, the relevant TASI
+section is cited explicitly.
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Lecture~1: The why and how of Calabi--Yau.}
+    The first lecture introduces the minimal string theory input,
+    explains why compactification leads to a
+    Ricci-flat internal geometry, why Calabi--Yau threefolds are the
+    computable and best understood class used in these notes, and how
+    Batyrev's construction turns reflexive polytopes and FRSTs into
+    explicit Calabi--Yau hypersurfaces in toric varieties. The emphasis
+    is pragmatic: what toric methods compute reliably today
+    (Hodge data, intersection numbers, cones, divisor topology), and
+    what remains beyond current algorithms.
+    Along the way we preview where these data enter physics: flux
+    superpotentials, instanton corrections, divisor zero-mode tests,
+    and K\"ahler-cone navigation.
+
+    \item \textbf{Lecture~2: Non-perturbative physics from toric data.}
+    The second lecture specialises to Type IIB on Calabi--Yau
+    orientifolds. Orientifolds are introduced in Lecture~2, after the
+    unorientifolded Calabi--Yau moduli have been fixed in Lecture~1.
+    It introduces the four-dimensional $\mathcal{N}=1$ supergravity
+    data only to the extent needed to compute a scalar potential:
+    the fields $(\tau,z^i,T^a)$, the K\"ahler potential, the
+    flux superpotential, the tadpole constraint, and the possible
+    non-perturbative terms. The main point is how toric
+    computations enter these functions: periods and genus-zero GV
+    invariants determine $W_{\rm flux}$ and the small-$W_0$
+    racetrack, while divisor Hodge data screen possible
+    ED3/gaugino-condensate terms in $W_{\rm np}$.
+    This culminates in the perturbatively flat vacuum mechanism, where
+    modest integer flux data and exponentially small instanton terms
+    combine to produce a very small flux superpotential.
+
+    \item \textbf{Lecture~3: Vacuum energies from toric geometry.}
+    The third lecture assembles the leading-order effective
+    theory for Type IIB O3/O7 orientifold compactifications with flux,
+    non-perturbative K\"ahler-modulus stabilisation, and a
+    redshifted antibrane uplift. It introduces
+    geometric phases, flop transitions, vex chambers, and the
+    extended K\"ahler cone,
+    then explains how chamber-aware algorithms, including
+    \texttt{fanroots} and \texttt{JAXVacua}, locate
+    K\"ahler moduli critical points. The remaining ingredients are the
+    Klebanov--Strassler throat, KPV anti-D3 uplift, the explicit
+    toric AdS precursor and candidate-dS recipes, and the control
+    checks: tadpoles, GV convergence, higher-order corrections,
+    backreaction, and quantisation issues. The list is retained
+    because these checks distinguish the leading-order candidate
+    construction from a fully controlled vacuum theorem.
+\end{enumerate}
+
+% ==================================================================
+\setcounter{section}{0}
+
+
+
