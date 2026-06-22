@@ -104,4 +104,4 @@ These notes are not yet a finished product. Comments — from mathematicians, st
 
 ## Licence and citation
 
-Distribution licence to be fixed before public release. A BibTeX entry for citing the notes will be provided once they are first uploaded to arXiv.
+Distribution licence to be fixed before public release. A BibTeX entry for citing the notes will be provided once (of if) they are first uploaded to arXiv.
