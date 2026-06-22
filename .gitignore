@@ -27,7 +27,7 @@ sections/*.log
 
 # --- Output PDFs ---
 # Comment out the next line if you want to track the built PDF.
-*.pdf
+#*.pdf
 
 # --- Editor and OS clutter ---
 .vscode/
