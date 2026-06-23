@@ -64,6 +64,8 @@ The notes lean on a small ecosystem of open-source computational tools and publi
 
 - **[CYTools](https://github.com/LiamMcAllisterGroup/cytools)** — Python toolkit for Calabi–Yau hypersurfaces in toric varieties: triangulations, intersection numbers, divisor topology, Gopakumar–Vafa invariants, mirror periods. *Demirtas, Rios-Tascon, McAllister, [arXiv:2211.03823](https://arxiv.org/abs/2211.03823).* Docs: [cytools.liammcallistergroup.com](https://cytools.liammcallistergroup.com).
 - **[`fanroots`](https://github.com/LiamMcAllisterGroup/fanroots)** — chamber-aware root-finding and optimisation over secondary fans (the focus of Lecture 4).
+- **[`cybir`](https://github.com/sheride/cybir)** — Python package for the extended Kähler cone of toric Calabi–Yau hypersurfaces from genus-zero Gopakumar–Vafa invariants; integrates with CYTools and implements the birational-geometry methods of [arXiv:2212.10573](https://arxiv.org/abs/2212.10573) and [arXiv:2303.00757](https://arxiv.org/abs/2303.00757). *Sheridan.*
+- **[`cyopt`](https://github.com/sheride/cyopt)** — Python discrete-optimisation toolkit for bounded integer-tuple search spaces, with eight algorithms tuned to FRST search on Calabi–Yau hypersurfaces via CYTools. *Sheridan, Schachner, MacFadden,* The DNA of Calabi–Yau Hypersurfaces, *[arXiv:2405.08871](https://arxiv.org/abs/2405.08871).*
 
 ### The [StringJAX](https://github.com/StringJAX) ecosystem
 
