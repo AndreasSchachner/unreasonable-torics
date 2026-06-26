@@ -48,3 +48,6 @@ Thumbs.db
 *-figure*.md5
 *-figure*.pdf
 tikz-cache/
+*.parquet
+*.json
+/notebooks/.ipynb_checkpoints
